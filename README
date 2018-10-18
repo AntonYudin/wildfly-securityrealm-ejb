@@ -1,4 +1,6 @@
 # wildfly-securityrealm-ejb
+
+## Overview
 EJB Security Realm for Wildfly
 
 This is an implementation of wildfly/elytron security realm that uses an EJB bean as a way
@@ -23,4 +25,20 @@ custom attributes for usernames, etc.
 The main idea is to shift the implementation of the authentication and authorization logic from
 a low level, wildfly version dependent code to a @Stateless bean that is part of the main
 application.
+
+
+## How to
+
+Create a **@Stateless** session bean and find it's global JNDI path.
+For example, a **@Stateless** bean with the name **MyAuthentication** that is part of an ejb module with the file name **myejbmodule.jar** which is part of an ear with the name **myproject.ear** will have a global JNDI path:
+
+**java:global/myproject/myejbmodule/MyAuthentication**
+
+Deploy the EJB security realm module into $wildflydir/modules directory.
+
+Use setup-security-wildfly-example.cli file to add the realm configuration to the standalone.xml
+In this file change **java:app/logic-1.0/LDAPAuthentication** to the path to your custom EJB authentication
+bean.
+
+Configure Wildfly to use the appropriate security domain that is set in the setup-security-wildfly-example.cli file.
 
