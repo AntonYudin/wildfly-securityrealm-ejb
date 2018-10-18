@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="wildfly-securityrealm-ejb" default="dist">
+
+
+	<property file="build.${host.NAME}.properties"/>
+	<property file="build.${os.name}.properties"/>
+
+	<property name="deploy.directory" value="${serverRoot}/modules/com/antonyudin/wildfly"/>
+
+
+	<target name="dist">
+
+
+		<mkdir dir="target/module/main"/>
+
+		<copy
+			file="target/securityrealm-ejb-1.0.0.Alpha1-SNAPSHOT.jar"
+			tofile="target/module/main/securityrealm-ejb-1.0.0.Alpha1-SNAPSHOT.jar"
+		/>
+
+		<copy
+			file="src/main/resources/module.xml"
+			tofile="target/module/main/module.xml"
+		/>
+
+	</target>
+
+
+	<target name="undeploy">
+
+		<delete dir="${deploy.directory}/security"/>
+	</target>
+
+	<target name="deploy" depends="dist">
+
+		<mkdir dir="${deploy.directory}/security"/>
+
+		<copy todir="${deploy.directory}/security">
+			<fileset dir="target/module"/>
+		</copy>
+	</target>
+
+
+</project>
+

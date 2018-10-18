@@ -1,0 +1,6 @@
+
+connect
+
+/subsystem=logging/logger=com.antonyudin.wildfly.security:add()
+/subsystem=logging/logger=com.antonyudin.wildfly.security:write-attribute(name=level,value=DEBUG)
+
