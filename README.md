@@ -45,10 +45,10 @@ Change the **NAME-ldap** in the setup-security-wildfly-example.cli to the name o
 
 Make sure that wildfly security domain is correctly set in the jboss-app.xml or jboss-web.xml
 
-`
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-app>
 	<security-domain>NAME-ldap</security-domain>
 </jboss-app>
-`
+```
 
