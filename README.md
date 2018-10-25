@@ -36,7 +36,7 @@ For example, a **@Stateless** bean with the name **MyAuthentication** that is pa
 
 Deploy the EJB security realm module into $wildflydir/modules directory.
 
-Use setup-security-wildfly-example.cli file to add the realm configuration to the standalone.xml.
+Use setup-security-wildfly-example.cli file to add the realm configuration and http configuration to the standalone.xml.
 
 In this file change **java:app/logic-1.0/LDAPAuthentication** to the path to your custom EJB authentication
 bean. (line 16 in setup-security-wildfly-example.cli)
