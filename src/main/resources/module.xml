@@ -3,7 +3,7 @@
 <module xmlns="urn:jboss:module:1.1" name="com.antonyudin.wildfly.security">
 
 	<resources>
-		<resource-root path="securityrealm-ejb-1.0.jar"/>
+		<resource-root path="ay-securityrealm-ejb-1.0.jar"/>
 	</resources>
 
 	<dependencies>
