@@ -12,6 +12,7 @@
 	<artifactId>ay-securityrealm-ejb</artifactId>
 	<version>1.0</version>
 
+	<name>ay-securityrealm-ejb</name>
 	<description>Wildfly EJB Security Realm</description>
 	<url>https://github.com/AntonYudin/wildfly-securityrealm-ejb</url>
 
