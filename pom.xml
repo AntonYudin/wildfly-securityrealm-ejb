@@ -9,8 +9,32 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.antonyudin.wildfly.security</groupId>
-	<artifactId>securityrealm-ejb</artifactId>
+	<artifactId>ay-securityrealm-ejb</artifactId>
 	<version>1.0</version>
+
+	<description>Wildfly EJB Security Realm</description>
+	<url>https://github.com/AntonYudin/wildfly-securityrealm-ejb</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Anton Yudin</name>
+			<email>dev@antonyudin.com</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/AntonYudin/wildfly-securityrealm-ejb.git</connection>
+		<developerConnection>scm:git:git://github.com/AntonYudin/wildfly-securityrealm-ejb.git</developerConnection>
+		<url>https://github.com/AntonYudin/wildfly-securityrealm-ejb</url>
+	</scm>
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -18,6 +42,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.org.wildfly.security.wildfly-elytron>1.2.3.Final</version.org.wildfly.security.wildfly-elytron>
 		<version.org.wildfly.core>4.0.0.Final</version.org.wildfly.core>
+		<maven.source.plugin.version>3.0.1</maven.source.plugin.version>
+		<maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
+		<maven.javadoc.plugin.html.version>-html5</maven.javadoc.plugin.html.version>
+		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -47,8 +75,63 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>${maven.gpg.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 
 </project>
 

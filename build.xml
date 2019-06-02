@@ -15,8 +15,8 @@
 		<mkdir dir="target/module/main"/>
 
 		<copy
-			file="target/securityrealm-ejb-1.0.jar"
-			tofile="target/module/main/securityrealm-ejb-1.0.jar"
+			file="target/ay-securityrealm-ejb-1.0.jar"
+			tofile="target/module/main/ay-securityrealm-ejb-1.0.jar"
 		/>
 
 		<copy
