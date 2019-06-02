@@ -2,7 +2,7 @@
 connect
 
 
-/subsystem=elytron/simple-role-decoder=NAME-from-roles-attribute:add(attribute=roles)
+#/subsystem=elytron/simple-role-decoder=NAME-from-roles-attribute:add(attribute=roles)
 
 /subsystem=elytron/custom-realm=ejbRealmStatusboard:add(module=com.antonyudin.wildfly.security, class-name=com.antonyudin.wildfly.security.EJBRealm, configuration={ejbPath = "java:app/logic-1.0/LDAPAuthentication"})
 
