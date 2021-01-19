@@ -29,6 +29,8 @@ import java.security.Principal;
 import java.security.spec.AlgorithmParameterSpec;
 
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -54,7 +56,7 @@ public class EJBRealm implements SecurityRealm, Configurable {
 
 
 	private final String ejbPathName = "ejbPath";
-	private String ejbPath = null;
+	private final List<String> ejbPaths = new ArrayList<>();
 
 	private final Map<String, Attributes> cache = new ConcurrentHashMap<>();
 
@@ -64,9 +66,22 @@ public class EJBRealm implements SecurityRealm, Configurable {
 
 		logger.fine(() -> "initialize(" + configuration + ")");
 
-		ejbPath = configuration.get(ejbPathName);
+		{
+			final String value = configuration.get(ejbPathName);
 
-		logger.fine(() -> "ejbPath: [" + ejbPath + "]");
+			if (value != null)
+				ejbPaths.add(value);
+		}
+
+		for (int i = 0;; i++) {
+			final String value = configuration.get(ejbPathName + "." + i);
+			if (value != null)
+				ejbPaths.add(value);
+			else
+				break;
+		}
+
+		logger.fine(() -> "ejbPaths: [" + ejbPaths + "]");
 	}
 
 
@@ -110,36 +125,39 @@ public class EJBRealm implements SecurityRealm, Configurable {
 
 	protected Map<String, Object> authenticate(final String name, final String password) {
 
-		logger.fine(() -> "\tusing ejbPath: [" + ejbPath + "]");
+		logger.fine(() -> "\tusing ejbPaths: [" + ejbPaths + "]");
 
-		try {
-			final javax.naming.Context context = new javax.naming.InitialContext();
+		for (String ejbPath: ejbPaths) {
+			try {
+				final javax.naming.Context context = new javax.naming.InitialContext();
 
-			final Object bean = context.lookup(ejbPath);
+				final Object bean = context.lookup(ejbPath);
 
-			logger.fine(() -> "name: [" + name + "]");
+				logger.fine(() -> "name: [" + name + "]");
 
-			final java.lang.reflect.Method method = bean.getClass().getMethod(
-				"authenticate", String.class, String.class
-			);
+				final java.lang.reflect.Method method = bean.getClass().getMethod(
+					"authenticate", String.class, String.class
+				);
 
-			logger.fine(() -> "found method: [" + method + "]");
+				logger.fine(() -> "found method: [" + method + "]");
 
-			@SuppressWarnings("unchecked")
-			final Map<String, Object> result = (Map<String, Object>) method.invoke(
-				bean, name, password
-			);
+				@SuppressWarnings("unchecked")
+				final Map<String, Object> result = (Map<String, Object>) method.invoke(
+					bean, name, password
+				);
 
-			logger.fine(() -> "result: [" + result + "]");
+				logger.fine(() -> "result: [" + result + "]");
 
-			return result;
+				if (result != null)
+					return result;
 
-		} catch (java.lang.Exception exception) {
+			} catch (java.lang.Exception exception) {
 
-			logger.log(java.util.logging.Level.SEVERE, "error authenticating", exception);
-
-			return null;
+				logger.log(java.util.logging.Level.SEVERE, "error authenticating", exception);
+			}
 		}
+
+		return null;
 	}
 
 
